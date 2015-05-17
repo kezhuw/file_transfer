@@ -59,14 +59,14 @@ func main() {
 		sourceFile := os.NewFile(uintptr(fd), args.filepath)
 
 		wg.Add(1)
-		go func(conn net.Conn, file *os.File, wg *sync.WaitGroup) {
+		go func(conn net.Conn, file *os.File) {
 			defer conn.Close()
 			defer wg.Done()
 			_, err := io.Copy(conn, file)
 			if err != nil {
 				log.Printf("transfer to %s error: %s", conn.RemoteAddr(), err)
 			}
-		}(conn, sourceFile, &wg)
+		}(conn, sourceFile)
 	}
 	wg.Wait()
 }

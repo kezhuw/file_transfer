@@ -32,12 +32,12 @@ func parse_args() {
 func main() {
 	parse_args()
 
-	listener, err := net.Listen("tcp", args.address)
+	file, err := os.Open(args.filepath)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	file, err := os.Open(args.filepath)
+	listener, err := net.Listen("tcp", args.address)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -61,6 +61,7 @@ func main() {
 		wg.Add(1)
 		go func(conn net.Conn, file *os.File, wg *sync.WaitGroup) {
 			defer conn.Close()
+			defer wg.Done()
 			_, err := io.Copy(conn, file)
 			if err != nil {
 				log.Printf("transfer to %s error: %s", conn.RemoteAddr(), err)
